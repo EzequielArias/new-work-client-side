@@ -2,11 +2,13 @@ import styled from 'styled-components';
 
 export const AccountContainer = styled.section 
 `
-    background-color : black;
+    background-color : #0f3942;
     height : 100vh; 
     display : flex;
     justify-content : center;
     align-items : center;
+    color : #f2f6f7;
+    border : 1px solid rgba(200,200,200,0.2);
 `
 
 export const UIpersonCard = styled.div 
@@ -63,6 +65,7 @@ font-size : 1.5em;
 export const Degree = styled.h2 
 `
 font-size : 3.5em;
+font-weight: 900;
 `
 
 export const ProfileImgContainer = styled.div 

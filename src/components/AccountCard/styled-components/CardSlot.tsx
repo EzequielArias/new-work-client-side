@@ -9,12 +9,14 @@ margin-left : 10px;
 color : #f2f6f7;
 padding : 10px;
 font-size : 20px;
+border-bottom : 0.5px solid gray;
 `
 
 export const CardContainer = styled.div<CardSubContainerProps>
 `
 overflow-y : scroll;
 max-height : ${props => props.height}%;
+color : #f2f6f7;
 `
 // 0f3942
 export const CardSubContainer = styled.div
@@ -61,9 +63,9 @@ export const TitleWrap = styled.div
 `
     display : flex;
     justify-content : flex-start;
-    color : black;
 
     & > span {
         font-size : 25px;
+        font-weight : 900;
     }
 `
