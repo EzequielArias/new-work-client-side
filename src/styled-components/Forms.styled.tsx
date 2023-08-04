@@ -4,9 +4,10 @@ import { Root } from './constants';
 export const FormContainer = styled.section 
 `
 width : 100%;
-height : 100vh;
+height : 90vh;
 
 display : flex;
+flex-direction : column;
 justify-content : center;
 align-items : center;
 
@@ -98,3 +99,27 @@ border-bottom-style : inset;
 border-bottom-left-radius : 50%;
 border-bottom-right-radius : 50%;
 `
+
+export const ErrorWarning = styled.span 
+`
+color : red;
+text-align : center;
+font-size : 1em;
+`
+
+
+export const AdviceSpan = styled.span`
+  color: ${Root.__Font_color};
+  margin-top: 20px;
+
+  a {
+    text-decoration: none;
+    color: ${Root.__Font_color};
+
+    &:hover {
+      color: ${Root.__Hover_color};
+    }
+  }
+`;
+
+

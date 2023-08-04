@@ -76,7 +76,7 @@ align-items : center;
 width : 30%;
 `
 
-export const ProfileIMG = styled.img 
+export const ProfileAccountCardImg = styled.img 
 `
 width : 10em;
 height : 10em;

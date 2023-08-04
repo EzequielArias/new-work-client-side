@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { UserForm } from "../interfaces"
+import { ResponseData, UserForm } from "../interfaces"
 
 export const useForm = () => {
 
@@ -7,6 +7,7 @@ export const useForm = () => {
         password : "",
         email : "",
     })
+    const [err, setError] = useState<String[]>([""])
 
     const userChange = (e : any) => {
         setUser((current : UserForm) => {
@@ -17,5 +18,12 @@ export const useForm = () => {
         })
     }
 
-    return { user, userChange}
+    const errs = (backendData : ResponseData<any>) => {
+        if(!backendData.ok){
+            setError(backendData.payload)
+            return true
+        }
+    }
+
+    return { user, userChange, errs, err}
 }

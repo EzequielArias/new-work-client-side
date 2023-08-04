@@ -1,8 +1,7 @@
 export const Root = {
-
     // Colors
-    __HeaderColors : '#dcb7e3',
-    __BtnSignHover : '#aa77c3',
-    __WWD_color : '#efefef',
-    __Cyan_color : '#bbddf5'
+    __Primary_color : '#002e39',
+    __Secondary_color : '#0f3942',
+    __Hover_color : '#0093d3',
+    __Font_color : '#f2f6f7'
 }

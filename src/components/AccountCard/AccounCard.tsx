@@ -1,4 +1,4 @@
-import { UIpersonCard, AccountContainer, SectionLeft, PersonInfoContainer, ProfileImgContainer ,SectionRight, ProfileIMG, CoverLetter, PersonInformation, Name, Degree } from './styled-components/UIcard'
+import { UIpersonCard, AccountContainer, SectionLeft, PersonInfoContainer, ProfileImgContainer ,SectionRight, ProfileAccountCardImg, CoverLetter, PersonInformation, Name, Degree } from './styled-components/UIcard'
 import { AchievementSlot } from './AchievementSlot'
 import wolf from '../../assets/TheWitcher.jpg'
 
@@ -9,7 +9,7 @@ export const AccounCard = () => {
         <SectionLeft>
         <PersonInfoContainer>
         <ProfileImgContainer>
-          <ProfileIMG src={wolf}/>
+          <ProfileAccountCardImg src={wolf}/>
           </ProfileImgContainer>
           <PersonInformation>
             <Name>Gerald The rivia</Name>
