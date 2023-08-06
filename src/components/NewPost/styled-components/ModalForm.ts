@@ -93,3 +93,21 @@ export const CurrentImage = styled.img
   height : 240px;
   width : 100%;
 `
+
+export const PublishPost = styled.button 
+`
+  margin-top : 7px;
+  margin-left : 30%;
+  margin-right : 30%;
+  border : none;
+  padding : 5px;
+
+  font-weight : bold;
+  color : ${Root.__Font_color};
+  background-color : ${Root.__Primary_color};
+
+  &:hover {
+    cursor : pointer;
+    background-color : ${Root.__Secondary_color};
+  }
+`

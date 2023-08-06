@@ -7,16 +7,22 @@ import { useDispatch } from "react-redux";
 import { signup } from "../../redux/states";
 import { Navbar } from "../../components";
 import { Link } from "react-router-dom";
+import { UserForm } from "../../interfaces";
 
 export const Signup = () => {
 
   const dispatch = useDispatch()
 
-  const { user, userChange, errs, err } = useForm();
-  const { loading, callEndpoint } = useFetchAndLoad()
+  const initialState : UserForm = {
+    email : "",
+    password : ""
+  }
+
+  const { form, formChange, errs, err } = useForm<UserForm>(initialState);
+  const { callEndpoint } = useFetchAndLoad()
 
   const handleSubmit = async () => {
-    const { data } = await callEndpoint(signUp(user))
+    const { data } = await callEndpoint(signUp(form))
     errs(data)
     if(err.length > 0) return
     dispatch(signup(data))
@@ -27,8 +33,8 @@ export const Signup = () => {
     return () => {
 
     }
-  }, [userChange])
-
+  }, [formChange])
+  console.log(form)
   return (
     <>
       <Navbar />
@@ -41,23 +47,23 @@ export const Signup = () => {
               placeholder="email"
               name="email"
               type="email"
-              onChange={userChange}
-              value={user.email}
+              onChange={formChange}
+              value={form.email}
             />
             <InputField
               placeholder="contraseña"
               name="password"
               type="password"
-              onChange={userChange}
-              value={user.password}
+              onChange={formChange}
+              value={form.password}
             />
             {
               err.length > 0
                 ?
                 <>
-                  {err.map((errors) => {
+                  {err.map((errors, index) => {
                     return (
-                      <ErrorWarning>
+                      <ErrorWarning key={index}>
                         {errors}
                       </ErrorWarning>
                     )

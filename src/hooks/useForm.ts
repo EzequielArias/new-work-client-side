@@ -1,16 +1,16 @@
 import { useState } from "react"
-import { ResponseData, UserForm } from "../interfaces"
+import { ResponseData } from "../interfaces"
 
-export const useForm = () => {
+export const useForm = <T> (initialState : Partial<T>) => {
 
-    const [user, setUser] = useState<UserForm>({
-        password : "",
-        email : "",
+    const [form, setForm] = useState<T>({
+        ...initialState as T
     })
+
     const [err, setError] = useState<String[]>([""])
 
-    const userChange = (e : any) => {
-        setUser((current : UserForm) => {
+    const formChange = (e : any) => {
+        setForm((current) => {
             return {
                 ...current,
                 [e.target.name] : e.target.value
@@ -25,5 +25,5 @@ export const useForm = () => {
         }
     }
 
-    return { user, userChange, errs, err}
+    return { form, formChange, setForm, errs, err}
 }

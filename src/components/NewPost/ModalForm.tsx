@@ -7,28 +7,38 @@ import { CloseBtn,
         CurrentImage,
         BorderWithArrow,
         ImagesContainer,
-        ArrowContainer
+        ArrowContainer,
+        PublishPost
         } from './styled-components'
 import { BsFileEarmarkDiff} from 'react-icons/bs';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
 import { useState, useCallback, useEffect } from 'react';
+import { useForm } from '../../hooks';
+import { FormPostState } from '../../interfaces';
 
 export const ModalForm = ({setModal} : any) => {
     
     setTimeout(() => {
         window.scrollTo(0, document.body.scrollHeight)
-    },1000)
+    },800)
 
-    const [posts, setPosts] = useState<{ images : string[], currentIndexImg : number}>({
-        images : [],
-        currentIndexImg : 0
-    })
+    const initialState : FormPostState = {
+      description : "",
+      images : [],
+      currentIndexImg : 0
+    }
 
+    const { form, formChange, setForm, err, errs} = useForm<FormPostState>(initialState)
+
+/** Lo unico que tengo que hacer es remplazar form por form y setForm entonces
+ * voy a poder utilizar mi hook generico ya aplicando de antemano las funciones para
+ * leer imagenes y pasar datos limpios a el form este componente se encarga de limpiar imagenes
+ * para un manejo correcto con el useForm
+ */
     const handleCreateBase64 = useCallback(async (e : any) => {
-        console.log('algo algo lao')
         const files = e.target.files[0];
         const base64 : any = await convertToBase64(files);
-        setPosts((current ) => {
+        setForm((current) => {
             return {
                 ...current,
                 images : [...current.images, base64]
@@ -57,24 +67,24 @@ export const ModalForm = ({setModal} : any) => {
 
     const handlePhotos = (direction: string) => {
         if (direction === "left") {
-          setPosts((current) => {
-            if (posts.currentIndexImg - 1 < 0) {
+          setForm((current : any) => {
+            if (form.currentIndexImg - 1 < 0) {
               return {
                 ...current,
-                currentIndexImg: posts.images.length - 1,
+                currentIndexImg: form.images.length - 1,
               };
             }
             // ######
             return {
               ...current,
-              currentIndexImg: posts.currentIndexImg - 1,
+              currentIndexImg: form.currentIndexImg - 1,
             };
           });
         }
     
         if (direction === "right") {
-          setPosts((current) => {
-            if (posts.currentIndexImg + 1 > posts.images.length - 1) {
+          setForm((current : any) => {
+            if (form.currentIndexImg + 1 > form.images.length - 1) {
               return {
                 ...current,
                 currentIndexImg: 0,
@@ -83,7 +93,7 @@ export const ModalForm = ({setModal} : any) => {
     
             return {
               ...current,
-              currentIndexImg : posts.currentIndexImg + 1,
+              currentIndexImg : form.currentIndexImg + 1,
             };
           });
         }
@@ -94,11 +104,12 @@ export const ModalForm = ({setModal} : any) => {
     },
     [
         handlePhotos,
-        handleCreateBase64
+        handleCreateBase64,
+        form
     ])
 
-    let imgAux : string = posts.images[posts.currentIndexImg];
-
+    let imgAux : string = form.images[form.currentIndexImg];
+    console.log(form)
   return (
     <>
         <ModalBackground>
@@ -106,7 +117,13 @@ export const ModalForm = ({setModal} : any) => {
                 <CloseBtn onClick={() => setModal(false)}>
                     X 
                 </CloseBtn>
-                <TextDescription rows={0} placeholder='¿ Que te gustaria compartir ?'/>
+                <TextDescription 
+                  placeholder='¿ Que te gustaria compartir ?' 
+                  rows={0} 
+                  onChange={formChange}
+                  value={form.description}
+                  name="description"
+                  />
                 <LabelFile htmlFor='LoadFile'><BsFileEarmarkDiff/></LabelFile>
                 <LoadFile 
                 type='file' 
@@ -115,20 +132,20 @@ export const ModalForm = ({setModal} : any) => {
                 accept='image/*, png, jpeg, jpg'
                 ></LoadFile>
                 {
-                    posts.images.length > 0
+                    form.images.length > 0
                     && 
                     <ImagesContainer>
 
                         <CurrentImage 
                             src={imgAux} 
                             alt='' 
-                            key={posts.currentIndexImg}
+                            key={form.currentIndexImg}
                             />
                             
                     <ArrowContainer>
                         <BorderWithArrow 
                         onClick={() => handlePhotos('left')}
-                            style={ posts.images.length > 0 
+                            style={ form.images.length > 0 
                                     ? { display : 'block'} 
                                     : { display : 'none'}}>
                                     <BiLeftArrow/>
@@ -136,7 +153,7 @@ export const ModalForm = ({setModal} : any) => {
 
                         <BorderWithArrow 
                         onClick={() => handlePhotos('right')}
-                        style={ posts.images.length > 0 
+                        style={ form.images.length > 0 
                                     ? { display : 'block'} 
                                     : { display : 'none'}}>
                             <BiRightArrow/>
@@ -144,6 +161,7 @@ export const ModalForm = ({setModal} : any) => {
                     </ArrowContainer>
                     </ImagesContainer>
                 }
+            { form.description.length > 0 || form.images.length > 0 ? ( <PublishPost>Subir</PublishPost> ) : ""}
             </ModalContainer>
         </ModalBackground>
     </>

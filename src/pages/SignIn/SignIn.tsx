@@ -15,16 +15,22 @@ import { useDispatch } from "react-redux"
 import { signin } from '../../redux/states'
 import { Navbar } from "../../components"
 import { Link } from "react-router-dom"
+import { UserForm } from "../../interfaces"
 
 export const SignIn = () => {
 
     const dispatch = useDispatch()
 
-    const { user, userChange, err, errs} = useForm()
+    const initialState : UserForm = {
+      email : "",
+      password : ""
+    }
+
+    const { form, formChange, err, errs} = useForm<UserForm>(initialState)
     const { callEndpoint } = useFetchAndLoad()
     
     const handleSubmit = async () => {
-        const { data } = await callEndpoint(signIn(user))
+        const { data } = await callEndpoint(signIn(form))
         errs(data)
         if(err.length > 0) return
         dispatch(signin(data))
@@ -43,15 +49,15 @@ export const SignIn = () => {
               placeholder="email" 
               type="email" 
               name="email" 
-              value={user.email}
-              onChange={userChange}
+              value={form.email}
+              onChange={formChange}
               />
             <InputField 
               placeholder="contraseña" 
               type="password" 
               name="password" 
-              value={user.password}
-              onChange={userChange}
+              value={form.password}
+              onChange={formChange}
               />
             {
               err.length > 0
