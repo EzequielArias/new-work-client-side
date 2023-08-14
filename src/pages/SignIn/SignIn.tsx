@@ -31,17 +31,21 @@ export const SignIn = () => {
     
     const handleSubmit = async () => {
         const { data } = await callEndpoint(signIn(form))
+
         errs(data)
-        if(err.length > 0) return
+        if(err.length > 0){
+          console.log(err)
+          return
+        }
         dispatch(signin(data))
-        window.localStorage.setItem('current_user', JSON.stringify(data));
+        localStorage.setItem('current_user', JSON.stringify(data.payload));
     }
 
   return (
     <>
     <Navbar/>
     <FormContainer>
-    <FormBox>
+    <FormBox id="signin">
         <GoogleLogin><FcGoogle/>Iniciar sesion con Google</GoogleLogin>
         <Line/>
         <InputBox>
@@ -60,12 +64,12 @@ export const SignIn = () => {
               onChange={formChange}
               />
             {
-              err.length > 0
+              err.length > 1
                 ?
                 <>
-                  {err.map((errors) => {
+                  {err.map((errors, index) => {
                     return (
-                      <ErrorWarning>
+                      <ErrorWarning key={index}>
                         {errors}
                       </ErrorWarning>
                     )
@@ -75,7 +79,7 @@ export const SignIn = () => {
                 ""
             }
         </InputBox>
-        <ButtonLog onClick={handleSubmit}><b>Iniciar sesion</b></ButtonLog>
+        <ButtonLog onClick={handleSubmit} form="form-signin"><b>Iniciar sesion</b></ButtonLog>
     </FormBox>
     <AdviceSpan>No tienes una cuenta ? <Link to={'/signup'}>Registrate</Link></AdviceSpan>
     </FormContainer>

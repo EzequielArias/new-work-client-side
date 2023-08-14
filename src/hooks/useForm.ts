@@ -7,7 +7,7 @@ export const useForm = <T> (initialState : Partial<T>) => {
         ...initialState as T
     })
 
-    const [err, setError] = useState<String[]>([""])
+    const [err, setError] = useState<String[]>([])
 
     const formChange = (e : any) => {
         setForm((current) => {
@@ -18,9 +18,9 @@ export const useForm = <T> (initialState : Partial<T>) => {
         })
     }
 
-    const errs = (backendData : ResponseData<any>) => {
+    const errs = (backendData : ResponseData<String>) => {
         if(!backendData.ok){
-            setError(backendData.payload)
+            setError((current) => [...current, backendData.payload])
             return true
         }
     }

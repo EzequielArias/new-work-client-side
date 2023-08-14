@@ -26,7 +26,7 @@ export const Signup = () => {
     errs(data)
     if(err.length > 0) return
     dispatch(signup(data))
-    window.localStorage.setItem('current_user', JSON.stringify(data));
+    window.localStorage.setItem('current_user', JSON.stringify(data.payload));
   }
 
   useEffect(() => {
@@ -34,12 +34,12 @@ export const Signup = () => {
 
     }
   }, [formChange])
-  console.log(form)
+
   return (
     <>
       <Navbar />
       <FormContainer>
-        <FormBox>
+        <FormBox id="form-signup">
           <GoogleLogin><FcGoogle />Registrarse con Google</GoogleLogin>
           <Line />
           <InputBox>
@@ -73,7 +73,7 @@ export const Signup = () => {
                 ""
             }
           </InputBox>
-          <ButtonLog onClick={handleSubmit}>Registrarse</ButtonLog>
+          <ButtonLog onClick={handleSubmit} type="button" form="form-signup">Registrarse</ButtonLog>
         </FormBox>
         <AdviceSpan>Tienes una cuenta ? <Link to={'/signin'}>Iniciar Sesion</Link></AdviceSpan>
       </FormContainer>

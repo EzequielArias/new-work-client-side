@@ -1,26 +1,35 @@
 // Assets
 
 // Styled-components
-import { useEffect } from "react";
-import { Header, BtnLog, SeasonSection, VerticalLine } from "../../styled-components"
+import { useEffect, useState } from "react";
+import { Header, BtnLog, SeasonSection, VerticalLine, ProfileImg } from "../../styled-components"
+import { Token, User } from "../../interfaces";
 
 export const Navbar = () => {
 
-  const currentUser = window.localStorage.getItem('current_user');
+  const currentUser : string | null = window.localStorage.getItem('current_user');
+
+  const [profile, setProfile] = useState<{ currentUser : User, Tokens : Token } | null>(null)
 
   useEffect(() => {
     
+    return () => {
+      if(typeof currentUser === 'string'){
+        let user = JSON.parse(currentUser)
+        setProfile(user)
+     }
+    }
   }, [currentUser])
 
   return (
     <Header>
         {
-          currentUser ? 
+           profile ? 
           (
           <>
           <span>LOGO</span>
         <SeasonSection>
-          <VerticalLine/>
+          <ProfileImg src={profile.currentUser.image}/>
         </SeasonSection>
           </>
           ) : 
