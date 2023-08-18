@@ -30,11 +30,6 @@ export const ModalForm = ({setModal} : any) => {
 
     const { form, formChange, setForm, err, errs} = useForm<FormPostState>(initialState)
 
-/** Lo unico que tengo que hacer es remplazar form por form y setForm entonces
- * voy a poder utilizar mi hook generico ya aplicando de antemano las funciones para
- * leer imagenes y pasar datos limpios a el form este componente se encarga de limpiar imagenes
- * para un manejo correcto con el useForm
- */
     const handleCreateBase64 = useCallback(async (e : any) => {
         const files = e.target.files[0];
         const base64 : any = await convertToBase64(files);
@@ -109,7 +104,7 @@ export const ModalForm = ({setModal} : any) => {
     ])
 
     let imgAux : string = form.images[form.currentIndexImg];
-    console.log(form)
+
   return (
     <>
         <ModalBackground>

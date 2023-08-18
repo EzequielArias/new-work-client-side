@@ -5,8 +5,7 @@ import './App.css'
 import { Route, Routes } from "react-router-dom"
 
 // Pages
-import { LandingPage, Signup, SignIn, Reel, Feed } from "./pages"
-
+import { LandingPage, Signup, SignIn, Reel, Feed, Profile } from "./pages"
 
 function App() {
 
@@ -18,6 +17,7 @@ function App() {
       <Route path="/signin" element={<SignIn/>}/>
       <Route path="/reel" element={<Reel/>}/>
       <Route path='/feed' element={<Feed/>}/>
+      <Route path='/profile' element={<Profile/>}/>
     </Routes>
     </>
   )

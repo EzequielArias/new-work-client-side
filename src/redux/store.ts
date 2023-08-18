@@ -6,3 +6,5 @@ export const store = configureStore({
         account : AccountSlice.reducer 
     }
 })
+
+export type StoreType = ReturnType<typeof store.getState>

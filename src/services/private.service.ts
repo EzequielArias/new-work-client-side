@@ -3,6 +3,22 @@ import { LoadAbort } from '../utilities'
 import { Token, ResponseData, FormPostState} from '../interfaces'
 const url = "https://new-work-production.up.railway.app"
 
+// User Enpoints
+
+export const GetUserRegister = (Token : string) => {
+    const controller = LoadAbort();
+    const headers = {
+        Authorization : Token
+    }
+
+    return {
+        call : axios.post(`${url}/account/getUser`, {},{ headers }),
+        controller
+    }
+}
+
+
+// Posts Enpoints
 export const createNewPost = async (newPost : FormPostState, Token : Token) => {
     const controller = LoadAbort()
     const headers = {
@@ -53,3 +69,4 @@ export const updatePost = async (postId : string, newData : FormPostState,Token 
         controller
     }
 }
+

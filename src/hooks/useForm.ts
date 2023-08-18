@@ -16,6 +16,7 @@ export const useForm = <T> (initialState : Partial<T>) => {
                 [e.target.name] : e.target.value
             }
         })
+        console.log(form)
     }
 
     const errs = (backendData : ResponseData<String>) => {

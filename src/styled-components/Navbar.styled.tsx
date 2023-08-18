@@ -1,6 +1,6 @@
 import styled from  'styled-components'
 import { Root } from './constants'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 export const Header = styled.header 
 `
@@ -16,8 +16,6 @@ export const Header = styled.header
 
 export const SeasonSection = styled.nav 
 `
-    width : 80%;
-
     display : flex;
     justify-content : flex-end;
     align-items : center;
@@ -54,6 +52,28 @@ export const Logo = styled.img
 `
 height : 100%;
 width : 20%;
+`
+
+export const NavbarProfileContainer = styled(NavLink) 
+`
+text-decoration : none;
+color : ${Root.__Font_color};
+width : 100%;
+display : flex;
+justify-content : space-around;
+align-items : center;
+padding : 5px;
+
+&:hover {
+    background-color : ${Root.__Secondary_color};
+    cursor : pointer;
+}
+`
+
+export const UserName = styled.span 
+`
+margin : 10px;
+font-size : 17px;
 `
 
 export const ProfileImg = styled.img 

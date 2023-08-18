@@ -12,10 +12,11 @@ import { FormContainer,
 import { useForm, useFetchAndLoad } from "../../hooks"
 import { signIn } from "../../services"
 import { useDispatch } from "react-redux"
-import { signin } from '../../redux/states'
+import { setUserData } from '../../redux/states'
 import { Navbar } from "../../components"
 import { Link } from "react-router-dom"
 import { UserForm } from "../../interfaces"
+import { UserInfo } from "../../adapters"
 
 export const SignIn = () => {
 
@@ -34,11 +35,11 @@ export const SignIn = () => {
 
         errs(data)
         if(err.length > 0){
-          console.log(err)
           return
         }
-        dispatch(signin(data))
-        localStorage.setItem('current_user', JSON.stringify(data.payload));
+        
+        dispatch(setUserData(UserInfo(data.payload)))
+        localStorage.setItem('current_user', JSON.stringify(data.payload.tokens));
     }
 
   return (
