@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { LoadAbort } from '../utilities'
-import { Token, ResponseData, FormPostState} from '../interfaces'
-const url = "https://new-work-production.up.railway.app"
+import { Token, ResponseData, UploadPostForm} from '../interfaces'
+//const url = "https://new-work-production.up.railway.app"
+const url = "http://localhost:3000"
 
 // User Enpoints
 
@@ -17,16 +18,15 @@ export const GetUserRegister = (Token : string) => {
     }
 }
 
-
 // Posts Enpoints
-export const createNewPost = async (newPost : FormPostState, Token : Token) => {
+export const createNewPost = (newPost : FormData, Token : string) => {
     const controller = LoadAbort()
     const headers = {
-        Authorization : Token.access_token
+        Authorization : Token
     }
 
     return {
-        call : axios.post<ResponseData<any>>(`${url}/posts/add`,newPost, {
+        call : axios.post<ResponseData<any>>(`${url}/posts/upload`,newPost, {
             headers
         }),
         controller
@@ -57,7 +57,7 @@ export const getManyPosts = async (limit : number, offset : number, Token : Toke
     }
 }
 
-export const updatePost = async (postId : string, newData : FormPostState,Token : Token) => {
+export const updatePost = async (postId : string, newData : UploadPostForm,Token : Token) => {
 
     const controller = LoadAbort();
     const headers  = {

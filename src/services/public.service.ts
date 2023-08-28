@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { LoadAbort } from '../utilities'
 import { Token, ResponseData, User, UserForm} from '../interfaces'
-const url = "https://new-work-production.up.railway.app"
-
+//const url = "https://new-work-production.up.railway.app"
+const url = "http://localhost:3000"
 export const signUp = (usr : UserForm) => {
     return {
         call: axios.post<ResponseData<{ tokens : Token, currentUser : User} | string>>(`${url}/account/signup`, {

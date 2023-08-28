@@ -26,7 +26,7 @@ export const Signup = () => {
     errs(data)
     if(err.length > 0) return
     dispatch(signup(data))
-    window.localStorage.setItem('current_user', JSON.stringify(data.payload));
+    localStorage.setItem('current_user', JSON.stringify(data.payload.tokens));
   }
 
   useEffect(() => {

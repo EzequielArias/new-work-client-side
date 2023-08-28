@@ -12,12 +12,14 @@ import { CloseBtn,
         } from './styled-components'
 import { BsFileEarmarkDiff} from 'react-icons/bs';
 import { BiLeftArrow, BiRightArrow } from 'react-icons/bi';
-import { useState, useCallback, useEffect } from 'react';
-import { useForm } from '../../hooks';
-import { FormPostState } from '../../interfaces';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { useForm, useFetchAndLoad } from '../../hooks';
+import { FormPostState, Token } from '../../interfaces';
+import { createNewPost } from '../../services';
 
 export const ModalForm = ({setModal} : any) => {
-    
+    const formData = useRef(new FormData());
+  
     setTimeout(() => {
         window.scrollTo(0, document.body.scrollHeight)
     },800)
@@ -27,18 +29,26 @@ export const ModalForm = ({setModal} : any) => {
       images : [],
       currentIndexImg : 0
     }
-
+    const { callEndpoint } = useFetchAndLoad();
     const { form, formChange, setForm, err, errs} = useForm<FormPostState>(initialState)
-
+    
     const handleCreateBase64 = useCallback(async (e : any) => {
-        const files = e.target.files[0];
-        const base64 : any = await convertToBase64(files);
-        setForm((current) => {
+      if(!e.target.files) return 
+      const files : File[] = Array.from(e.target.files);
+
+        for (let i = 0; i < e.target.files.length; i++) {
+          formData.current.append('file', e.target.files[i])
+        }
+
+        for (let i = 0; i < files.length; i++) {
+           const base64 : any = await convertToBase64(files[i]);
+           setForm((current) => {
             return {
                 ...current,
                 images : [...current.images, base64]
             }
         })
+        }
         e.target.value = ""
     },[])
 
@@ -59,6 +69,7 @@ export const ModalForm = ({setModal} : any) => {
             } 
         })
     }
+    let imgAux : string = form.images[form.currentIndexImg];
 
     const handlePhotos = (direction: string) => {
         if (direction === "left") {
@@ -93,17 +104,20 @@ export const ModalForm = ({setModal} : any) => {
           });
         }
       };
-
-    useEffect(() => {
-
-    },
-    [
-        handlePhotos,
-        handleCreateBase64,
-        form
-    ])
-
-    let imgAux : string = form.images[form.currentIndexImg];
+    let at = localStorage.getItem('current_user');
+    /**
+      Tengo que colocar un formData.set('description'), cambiar lo que va a recibit el servicio
+      y pasarle el formData al servicio y testear si guarda el post
+     */
+    const uploadPost = async (e : any) => {
+        e.preventDefault()
+        formData.current.set('description', form.description)
+        if(at){
+        let token : Token = JSON.parse(at) 
+        const { data } =  await callEndpoint(createNewPost(formData.current, token.access_token))
+        console.log(data)
+      }
+    }
 
   return (
     <>
@@ -120,12 +134,14 @@ export const ModalForm = ({setModal} : any) => {
                   name="description"
                   />
                 <LabelFile htmlFor='LoadFile'><BsFileEarmarkDiff/></LabelFile>
-                <LoadFile 
+                <input 
                 type='file' 
                 id='LoadFile' 
-                onChange={(e) => handleCreateBase64(e)}
-                accept='image/*, png, jpeg, jpg'
-                ></LoadFile>
+                onChange={handleCreateBase64}
+                accept='image/png,image/jpeg,image/jpg'
+                name='files'
+                multiple
+                />
                 {
                     form.images.length > 0
                     && 
@@ -134,7 +150,6 @@ export const ModalForm = ({setModal} : any) => {
                         <CurrentImage 
                             src={imgAux} 
                             alt='' 
-                            key={form.currentIndexImg}
                             />
                             
                     <ArrowContainer>
@@ -156,7 +171,11 @@ export const ModalForm = ({setModal} : any) => {
                     </ArrowContainer>
                     </ImagesContainer>
                 }
-            { form.description.length > 0 || form.images.length > 0 ? ( <PublishPost>Subir</PublishPost> ) : ""}
+            { 
+            form.description.length > 0 || form.images.length > 0 
+            ? ( <PublishPost onClick={uploadPost}>Subir</PublishPost> ) 
+            : ""
+            }
             </ModalContainer>
         </ModalBackground>
     </>

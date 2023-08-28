@@ -94,13 +94,14 @@ export const CurrentImage = styled.img
   width : 100%;
 `
 
-export const PublishPost = styled.button 
+export const PublishPost = styled.span 
 `
   margin-top : 7px;
   margin-left : 30%;
   margin-right : 30%;
   border : none;
   padding : 5px;
+  text-align : center;
 
   font-weight : bold;
   color : ${Root.__Font_color};
