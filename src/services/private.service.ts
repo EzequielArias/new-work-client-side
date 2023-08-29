@@ -45,7 +45,7 @@ export const getPostById = async (postId : string, Token : Token) => {
     }
 }
 
-export const getManyPosts = async (limit : number, offset : number, Token : Token) => {
+export const getManyPosts = (limit : number, offset : number, Token : Token) => {
     const controller = LoadAbort();
     const headers  = {
         Authorization : Token.access_token 

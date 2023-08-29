@@ -104,6 +104,7 @@ export const ModalForm = ({setModal} : any) => {
           });
         }
       };
+      
     let at = localStorage.getItem('current_user');
     /**
       Tengo que colocar un formData.set('description'), cambiar lo que va a recibit el servicio
@@ -115,7 +116,6 @@ export const ModalForm = ({setModal} : any) => {
         if(at){
         let token : Token = JSON.parse(at) 
         const { data } =  await callEndpoint(createNewPost(formData.current, token.access_token))
-        console.log(data)
       }
     }
 

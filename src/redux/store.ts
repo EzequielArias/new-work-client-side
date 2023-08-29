@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { AccountSlice } from "./states";
+import { AccountSlice, PostSlice } from "./states";
 
 export const store = configureStore({
     reducer : {
-        account : AccountSlice.reducer 
+        account : AccountSlice.reducer,
+        posts : PostSlice.reducer
     }
 })
 

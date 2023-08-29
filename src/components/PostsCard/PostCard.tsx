@@ -9,32 +9,71 @@ import {
     PostOwnerSubTitle,
     HeaderSection,
     Description,
-    PostImages
-} from "./styled-components"
-import image from '../../assets/TheWitcher.jpg'
+    PostImages,
+    CardRelative,
+    CardArrowPrevius
+} from "./styled-components";
 import {
     AiFillHeart,
     AiOutlineComment,
     AiOutlineShareAlt
 } from 'react-icons/ai'
-import { ProfileImg } from "../../styled-components"
+import { ProfileImg } from "../../styled-components";
+import { CardArrowNext } from "./styled-components";
+import { PostCardData } from "../../interfaces";
+import { useState } from "react";
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
-export const PostCard = () => {
+export const PostCard = ({
+    images,
+    user,
+    userSubTitle,
+    description,
+    userProfile
+}: PostCardData) => {
+
+    const [ indexImg, setIndexImg ] = useState<number>(0)
+
+    const handleMovement = (direction : string) => {
+        if(direction === 'next'){
+            if(images.length - 1 >= indexImg + 1) setIndexImg(prev => prev + 1)
+            else setIndexImg(0)
+        }
+
+        if(direction === 'previus'){
+            if(0 <= indexImg - 1) setIndexImg(prev => prev - 1)
+            else setIndexImg(images.length - 1)
+        }
+    }
+
     return (
         <PostsContainer>
             <PostHeaderContainer>
-                <ProfileImg src={image} alt=""/>
+                <ProfileImg src={userProfile} alt="" />
                 <HeaderSection>
-                 <PostsOwnerName>The Witcher</PostsOwnerName>
-                 <PostOwnerSubTitle>EL mago mas poderoso de akzaban</PostOwnerSubTitle>
+                    <PostsOwnerName>{user}</PostsOwnerName>
+                    <PostOwnerSubTitle>{userSubTitle}</PostOwnerSubTitle>
                 </HeaderSection>
             </PostHeaderContainer>
             <PostBox>
                 <Description>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus eum dolore dolorum at reprehenderit animi quasi tempore id error voluptatum quas quos quibusdam aspernatur, aut sunt quisquam omnis aliquam rem.
-                    Molestiae dolor atque vitae sunt. Architecto labore facilis, natus nesciunt ad nulla saepe velit, quis perferendis inventore eaque provident eum commodi dolor, tempore maiores veniam? Doloremque doloribus animi quo quaerat?
+                    {description}
                 </Description>
-                <PostImages src={image} alt=""/>
+                <>
+                    {
+                        images.length > 0
+                            ?
+                            (
+                                <CardRelative>
+                                <CardArrowNext onClick={() => handleMovement('next')}><IoIosArrowForward/></CardArrowNext>
+                                <CardArrowPrevius onClick={() => handleMovement('previus')}><IoIosArrowBack/></CardArrowPrevius>
+                                <PostImages src={images[indexImg]} alt={user}/>
+                                </CardRelative>
+                            )
+                            :
+                            ""
+                    }
+                </>
             </PostBox>
             <PostFooterContainer>
 

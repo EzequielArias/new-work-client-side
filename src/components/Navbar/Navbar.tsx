@@ -36,7 +36,7 @@ export const Navbar = () => {
   useEffect(() => {
 
     const handleTokens = async () => {
-      console.log(at)
+
       if(at){
 
           let parse : Token = JSON.parse(at)

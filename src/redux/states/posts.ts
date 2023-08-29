@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { PostGetResponse, PostReduxState, PostsAdapter } from "../../interfaces";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
-export const PostState = {
-    selectedPost : {},
+export const PostState : PostReduxState = {
+    selectedPost : {} as PostGetResponse,
     posts : []
 }
 
@@ -10,7 +12,12 @@ export const PostSlice = createSlice({
     initialState : PostState,
     reducers : {
 
-        fillPost : (state, action) => state.posts = action.payload,
+        fillPost : (state, action : PayloadAction<PostsAdapter[]>) =>  {
+            return {
+                ...state,
+                posts : [...state.posts , ...action.payload]
+            }
+        }
 
     }
 })
