@@ -17,3 +17,4 @@ export interface UserProfile {
     academic : string[]
     workexperience : string[]
 }
+

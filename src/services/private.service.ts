@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { LoadAbort } from '../utilities'
-import { Token, ResponseData, UploadPostForm} from '../interfaces'
+import { Token, ResponseData, UploadPostForm, WorkOrEducationInterface } from '../interfaces'
 //const url = "https://new-work-production.up.railway.app"
 const url = "http://localhost:3000"
 
@@ -57,7 +57,7 @@ export const getManyPosts = (limit : number, offset : number, Token : Token) => 
     }
 }
 
-export const updatePost = async (postId : string, newData : UploadPostForm,Token : Token) => {
+export const updatePost = (postId : string, newData : UploadPostForm,Token : Token) => {
 
     const controller = LoadAbort();
     const headers  = {
@@ -70,3 +70,55 @@ export const updatePost = async (postId : string, newData : UploadPostForm,Token
     }
 }
 
+
+// WorkExperience endpoints
+
+export const addWorkExperience = (experience : WorkOrEducationInterface , Token : Token) => {
+    const controller = LoadAbort();
+    const headers = {
+        Authorization : Token.access_token
+    }
+
+    return {
+        call : axios.post<ResponseData<any>>(`${url}/workexperience/add`, experience, { headers }),
+        controller
+    }
+}
+
+export const getExperience = (Token : Token) => {
+    const controller = LoadAbort();
+    const headers = {
+        Authorization : Token.access_token
+    }
+
+    return {
+        call : axios.get(`${url}/workexperience/get`, { headers }),
+        controller
+    }
+}
+
+// Education enpoints
+
+export const addEducation = (education : WorkOrEducationInterface, Token : Token) => {
+    const controller = LoadAbort();
+    const headers = {
+        Authorization : Token.access_token
+    }
+
+    return {
+        call : axios.post<ResponseData<any>>(`${url}/academic/add`, education, { headers }),
+        controller 
+    }
+}
+
+export const getEducation = (Token : Token) => {
+    const controller = LoadAbort();
+    const headers = {
+        Authorization : Token.access_token
+    }
+
+    return {
+        call : axios.get<ResponseData<any>>(`${url}/academic/get`,{ headers }),
+        controller
+    }
+}

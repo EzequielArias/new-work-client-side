@@ -1,5 +1,10 @@
 import { useCallback } from "react";
 
+import { ResumeSlot } from "../components";
+// React hooks
+import { useEffect } from "react";
+
+// Styled-components
 import { NewProfilePhoto, 
          Photo, 
          PhotoProfileSection, 
@@ -12,22 +17,40 @@ import { NewProfilePhoto,
          BtnContainer,
          BTNsendData
         } from "../styled-component";
-
 import { ErrorWarning } from "../../../styled-components";
 
 import { BsFillQuestionSquareFill } from 'react-icons/bs';
 
 //Redux-hooks
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useForm } from "../../../hooks";
+// Custom Hooks
+import { useForm, useFetchAndLoad } from "../../../hooks";
 
-import { UserProfile } from "../../../interfaces";
+// Interfaces & Types
+import { Token, UserProfile } from "../../../interfaces";
 import { StoreType } from "../../../redux/store";
 
-export const User = () => {
+// Axios services
+import { getEducation, getExperience } from "../../../services"; 
 
+// Redux actions
+import { fillWorkExperience, fillAcademic } from "../../../redux/states";
+
+export const User = () => {
+    const dispatch = useDispatch()
     const { image, name } = useSelector((user : StoreType) => user.account)
+    const { callEndpoint, loading } = useFetchAndLoad()
+
+    const at : Token = JSON.parse(localStorage.getItem('current_user') as string);
+
+    const resumeState = {
+                id : "",
+                start : {} as Date,
+                end : {} as Date,
+                description : "",
+                institution : ""
+    }
 
     let initialState = {
         avatar : "",
@@ -67,7 +90,19 @@ export const User = () => {
             } 
         })
     }
-
+    useEffect(() => {
+        const getData = async () => {
+            const academic1 = await callEndpoint(getEducation(at)),
+                  work1 = await callEndpoint(getExperience(at))
+                  dispatch(fillWorkExperience(academic1.data.payload))
+                  dispatch(fillAcademic(work1.data.payload))
+        }
+        getData()
+      return () => {
+        
+      }
+    }, [])
+    
   return (
         <SelectedViewContainer>
             <TitleSection>Avatar</TitleSection>
@@ -104,6 +139,30 @@ export const User = () => {
                             />
             </MyNameContainer>
             <ErrorWarning style={{textAlign : 'center', width : '100%'}}>{err.length > 0 ? 'Error super epico' : ''}</ErrorWarning>
+            <TitleSection>Formacion</TitleSection>
+            <GParagraph>
+                Aqui puedes agregar tu informacion academica
+                <span onClick={() => {}} style={{borderBottom : "1px solid white", width : "10%", marginLeft : "4px"}}>Agregar formacion</span>
+            </GParagraph>
+
+            <ResumeSlot 
+            command="education"
+            title=""
+            initialForm={resumeState}
+            />
+            
+            <TitleSection>Experiencia laboral</TitleSection>
+            <GParagraph>
+                Aqui puedes agregar tu experiencia laboral
+                <span onClick={() => {}} style={{borderBottom : "1px solid white", width : "10%", marginLeft : "4px"}}>Agregar experiencia</span>
+            </GParagraph>
+
+            <ResumeSlot
+            command="work"
+            title=""
+            initialForm={resumeState}
+            />
+
             <BtnContainer>
                 <BTNsendData>Subir cambios</BTNsendData>
             </BtnContainer>

@@ -34,4 +34,3 @@ export type PostReduxState = {
     selectedPost : PostGetResponse;
     posts : PostsAdapter[]
 }
-

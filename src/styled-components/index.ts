@@ -3,3 +3,4 @@ export * from './Footer.styled';
 export * from './WhatWeDo';
 export * from './Forms.styled';
 export * from './Loader.styled';
+export * from './ModalBox.style';

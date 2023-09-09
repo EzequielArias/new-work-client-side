@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { CardSubContainerProps } from '../../../interfaces';
 import { Root } from '../../../styled-components/constants';
+import { CardSubContainerProps } from '../../../interfaces';
 
 export const MainTitle = styled.div
 `
