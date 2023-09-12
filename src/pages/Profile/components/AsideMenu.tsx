@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 // Icons
 import { CgProfile } from 'react-icons/cg';
 import { IoSettingsSharp } from 'react-icons/io5';
+import { AiFillHome } from 'react-icons/ai'
 
 //Redux-hooks
 import { useSelector } from "react-redux";
@@ -30,7 +31,7 @@ export const AsideMenu = ({ setPage } : {setPage : React.Dispatch<React.SetState
             <MenuItemContainer>
                 <MenuItem onClick={() => pageHandler('profile')}><CgProfile/>Perfil</MenuItem>
                 <MenuItem onClick={() => pageHandler('setting')}><IoSettingsSharp/>Configuracion</MenuItem>
-                <MenuItem onClick={() => pageHandler('etwas')}>Logaritmo 3</MenuItem>
+                <MenuItem onClick={() => pageHandler('etwas')}><AiFillHome/>Inicio</MenuItem>
                 <MenuItem onClick={() => pageHandler('loquesea')}>Logaritmo 4</MenuItem>
             </MenuItemContainer>
         </AsideMenuContainer>

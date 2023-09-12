@@ -1,7 +1,7 @@
 export interface WorkOrEducationInterface {
     id : string
-    end : Date | null;
-    start : Date | null;
+    end : string;
+    start : string;
     description : string;
     institution : string;
 }
@@ -10,7 +10,7 @@ export interface AchievementSlotParams {
     title : string;
     height : string;
     iterableData : WorkOrEducationInterface[];
-    setModal?: React.Dispatch<React.SetStateAction<boolean>>;
+    setModal : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface ResumeSlotParams {

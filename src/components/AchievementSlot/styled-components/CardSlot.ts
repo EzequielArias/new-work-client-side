@@ -10,6 +10,13 @@ color : #f2f6f7;
 padding : 10px;
 font-size : 20px;
 border-bottom : 0.5px solid gray;
+& * > {
+  padding : 3px;
+  &:hover {
+    background-color : ${Root.__Primary_color};
+    cursor : pointer;
+  }
+}
 `
 
 export const CardContainer = styled.div<CardSubContainerProps>
@@ -70,4 +77,11 @@ export const TitleWrap = styled.div
         font-size : 25px;
         font-weight : 900;
     }
+`
+export const EmptySlot = styled.span 
+`
+    width : 100%;
+    text-align : center;
+    font-size : 30px;
+    padding : 20px 0 20px 0;
 `

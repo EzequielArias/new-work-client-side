@@ -17,29 +17,35 @@ import { useForm, useFetchAndLoad } from "../../../hooks";
 import { addWorkExperience, addEducation } from "../../../services";
 
 // React hooks
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Redux hooks
 import { useDispatch, useSelector } from "react-redux";
 
 // Redux actions
-import { achiviementSlotForm, fillAcademic, fillWorkExperience } from "../../../redux/states";
+import { achiviementSlotForm, fillAcademic } from "../../../redux/states";
 
 // Interfaces & Types
 import { Token, ResumeSlotParams, WorkOrEducationInterface } from "../../../interfaces";
 import { StoreType } from "../../../redux/store";
 
-export const ResumeSlot = ({ initialForm, command, title } : ResumeSlotParams) => {
+export const AcademicSlotContainer = () => {
+  const initialState : WorkOrEducationInterface= {
+    id : "",
+    start : "",
+    end : "",
+    description : "",
+    institution : ""
+}
    // Token
    const at : Token = JSON.parse(localStorage.getItem("current_user") as string);
 
    // Hooks
    const [ modal, setModal] = useState<boolean>(false)
-   const { form, formChange } = useForm(initialForm)
+   const { form, formChange } = useForm(initialState)
    const { callEndpoint } = useFetchAndLoad()
-   const { workExperience, academic } = useSelector((state : StoreType) => state.experience)
+   const { academic } = useSelector((state : StoreType) => state.experience)
    const dispatch = useDispatch();
-   let iterableData : WorkOrEducationInterface[] | null = null;
 
   // Handle Functions. ###
 
@@ -49,33 +55,13 @@ export const ResumeSlot = ({ initialForm, command, title } : ResumeSlotParams) =
   };
 
   const handleSubmit = async () => {
-    if(command === "education")
-    {
       const { data } = await callEndpoint(addEducation(form, at));
       dispatch(fillAcademic(data.payload))
-    }
-
-    if(command === "work")
-    {
-      const { data } = await callEndpoint(addWorkExperience(form, at))
-      dispatch(fillWorkExperience(data.payload))
-    }
   }
-  /**
-    <AchievementSlot
-          title=""
-          height="200px"
-        />
-   */
-  if(command === "education") iterableData = academic;
-  if(command === "work") iterableData = workExperience
-  useEffect(() => {
-    dispatch(achiviementSlotForm(true))
-    
-    return () => {
-      
-    }
-  }, [iterableData])
+
+  const handleModal = () => {
+    setModal(true)
+  }
 
   return (
     <>
@@ -100,19 +86,20 @@ export const ResumeSlot = ({ initialForm, command, title } : ResumeSlotParams) =
                   <DateInput type="date" name="end" onChange={formChange} />
                 </FlexSection>
               </FlexSection>
-              <span onClick={handleSubmit}></span>
+              <button onClick={handleSubmit} style={{color : "red"}}>SUBMIT</button>
             </ModalMainBox>
           </ModalBoxContainer>
         )}
-      {
-        iterableData  &&  <ResumeSlotContainer>
+      
+      <ResumeSlotContainer>
         <AchivementSlot
-        title={title}
+        title={"Educacion"}
         height={"200px"}
-        iterableData={iterableData}
+        iterableData={academic}
+        setModal={setModal}
         />
     </ResumeSlotContainer>
-      }
+      
     </>
   )
 }

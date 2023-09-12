@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { ResumeSlot } from "../components";
+import { AcademicSlotContainer, WorkSlotContainer } from "../components";
 // React hooks
 import { useEffect } from "react";
 
@@ -44,14 +44,6 @@ export const User = () => {
 
     const at : Token = JSON.parse(localStorage.getItem('current_user') as string);
 
-    const resumeState = {
-                id : "",
-                start : {} as Date,
-                end : {} as Date,
-                description : "",
-                institution : ""
-    }
-
     let initialState = {
         avatar : "",
         name : "",
@@ -94,8 +86,8 @@ export const User = () => {
         const getData = async () => {
             const academic1 = await callEndpoint(getEducation(at)),
                   work1 = await callEndpoint(getExperience(at))
-                  dispatch(fillWorkExperience(academic1.data.payload))
-                  dispatch(fillAcademic(work1.data.payload))
+                  dispatch(fillWorkExperience(work1.data.payload))
+                  dispatch(fillAcademic(academic1.data.payload))
         }
         getData()
       return () => {
@@ -140,28 +132,13 @@ export const User = () => {
             </MyNameContainer>
             <ErrorWarning style={{textAlign : 'center', width : '100%'}}>{err.length > 0 ? 'Error super epico' : ''}</ErrorWarning>
             <TitleSection>Formacion</TitleSection>
-            <GParagraph>
-                Aqui puedes agregar tu informacion academica
-                <span onClick={() => {}} style={{borderBottom : "1px solid white", width : "10%", marginLeft : "4px"}}>Agregar formacion</span>
-            </GParagraph>
 
-            <ResumeSlot 
-            command="education"
-            title=""
-            initialForm={resumeState}
-            />
+
+            <AcademicSlotContainer/>
             
             <TitleSection>Experiencia laboral</TitleSection>
-            <GParagraph>
-                Aqui puedes agregar tu experiencia laboral
-                <span onClick={() => {}} style={{borderBottom : "1px solid white", width : "10%", marginLeft : "4px"}}>Agregar experiencia</span>
-            </GParagraph>
-
-            <ResumeSlot
-            command="work"
-            title=""
-            initialForm={resumeState}
-            />
+            
+            <WorkSlotContainer/>
 
             <BtnContainer>
                 <BTNsendData>Subir cambios</BTNsendData>

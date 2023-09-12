@@ -7,7 +7,8 @@ export const store = configureStore({
         posts : PostSlice.reducer,
         style : StyleSlice.reducer,
         experience : ExperiencesSlice.reducer
-    }
+    },
+    
 })
 
 export type StoreType = ReturnType<typeof store.getState>

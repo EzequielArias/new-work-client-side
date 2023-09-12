@@ -1,2 +1,3 @@
 export * from './AsideMenu';
-export * from './ResumeSlot';
+export * from './AcademicSlotContainer'
+export * from './WorkSlotContainer';

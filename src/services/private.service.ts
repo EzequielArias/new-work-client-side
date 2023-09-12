@@ -78,7 +78,7 @@ export const addWorkExperience = (experience : WorkOrEducationInterface , Token 
     const headers = {
         Authorization : Token.access_token
     }
-
+    console.log('AGREGAR EXPERIENCIA')
     return {
         call : axios.post<ResponseData<any>>(`${url}/workexperience/add`, experience, { headers }),
         controller
@@ -104,7 +104,7 @@ export const addEducation = (education : WorkOrEducationInterface, Token : Token
     const headers = {
         Authorization : Token.access_token
     }
-
+    console.log('AGRGAR EDUCATION')
     return {
         call : axios.post<ResponseData<any>>(`${url}/academic/add`, education, { headers }),
         controller 

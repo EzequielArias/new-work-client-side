@@ -17,7 +17,7 @@ export const ExperiencesSlice = createSlice({
 
             return {
                 ...state,
-                workExperience : [...state.academic, ...action.payload]
+                workExperience : [...state.workExperience, ...action.payload]
             }
         },
         
