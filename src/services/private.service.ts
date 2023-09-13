@@ -18,6 +18,18 @@ export const GetUserRegister = (Token : string) => {
     }
 }
 
+export const editUser = (Token : Token , data : any) => {
+    const controller = LoadAbort();
+    const headers = {
+        Authorization : Token.access_token
+    }
+
+    return {
+        call : axios.post(`${url}/account/edit`, data, { headers }),
+        controller
+    }
+}
+
 // Posts Enpoints
 export const createNewPost = (newPost : FormData, Token : string) => {
     const controller = LoadAbort()
@@ -122,3 +134,5 @@ export const getEducation = (Token : Token) => {
         controller
     }
 }
+
+

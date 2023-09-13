@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import { AcademicSlotContainer, WorkSlotContainer } from "../components";
 // React hooks
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 // Styled-components
 import { NewProfilePhoto, 
@@ -32,12 +32,13 @@ import { Token, UserProfile } from "../../../interfaces";
 import { StoreType } from "../../../redux/store";
 
 // Axios services
-import { getEducation, getExperience } from "../../../services"; 
+import { getEducation, getExperience, editUser } from "../../../services"; 
 
 // Redux actions
 import { fillWorkExperience, fillAcademic } from "../../../redux/states";
 
 export const User = () => {
+    const formRef = useRef(new FormData());
     const dispatch = useDispatch()
     const { image, name } = useSelector((user : StoreType) => user.account)
     const { callEndpoint, loading } = useFetchAndLoad()
@@ -47,14 +48,13 @@ export const User = () => {
     let initialState = {
         avatar : "",
         name : "",
-        academic : [],
-        workplace : []
     }
 
     const { form, setForm, err, errs, formChange} = useForm<UserProfile>(initialState)
 
     const handleCreateBase64 = useCallback(async (e : any) => {
         const files = e.target.files[0];
+        formRef.current.append('file',files)
         const base64 : any = await convertToBase64(files);
         setForm((current) => {
             return {
@@ -82,7 +82,28 @@ export const User = () => {
             } 
         })
     }
+
+    const changeName = async () => {
+        try {
+            await callEndpoint(editUser(at, {name : form.name}))
+            console.log('CHANGE NAME')
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const changeImg = async () => {
+        try {
+            await callEndpoint(editUser(at, formRef.current))
+            console.log('CHANGE IMAGE')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
+        
         const getData = async () => {
             const academic1 = await callEndpoint(getEducation(at)),
                   work1 = await callEndpoint(getExperience(at))
@@ -93,7 +114,7 @@ export const User = () => {
       return () => {
         
       }
-    }, [])
+    }, [changeImg, changeName])
     
   return (
         <SelectedViewContainer>
@@ -116,6 +137,9 @@ export const User = () => {
                     onChange={(e : any) => handleCreateBase64(e)}
                 />
             </PhotoProfileSection>
+            <BtnContainer>
+                <BTNsendData onClick={changeImg}>Enviar data</BTNsendData>
+            </BtnContainer>            
             <ErrorWarning style={{textAlign : 'center', width : '100%'}}>{err.length > 0 ? 'Error super epico' : ''}</ErrorWarning>
             <TitleSection>Tu nombre</TitleSection>
             <GParagraph>
@@ -130,6 +154,9 @@ export const User = () => {
                             onChange={(e : any) => formChange(e)}
                             />
             </MyNameContainer>
+            <BtnContainer>
+                <BTNsendData onClick={changeName}>Cambiar</BTNsendData>
+            </BtnContainer>
             <ErrorWarning style={{textAlign : 'center', width : '100%'}}>{err.length > 0 ? 'Error super epico' : ''}</ErrorWarning>
             <TitleSection>Formacion</TitleSection>
 

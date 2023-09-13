@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Root } from '../../../styled-components/constants';
+import { Link } from 'react-router-dom';
 
 // Common components
 
@@ -84,10 +85,32 @@ export const MenuItem = styled.li
 `
 list-style : none;
 text-decoration : none;
-text-align : center;
 display : flex;
 align-items:center;
-justify-content:center;
+justify-content:flex-start;
+width : 100%;
+padding : 15px;
+margin-top : 5px;
+margin-bottom : 5px;
+color : ${Root.__Font_color};
+font-weight : 600;
+
+    &:hover {
+        cursor : pointer;
+        background-color : ${Root.__Secondary_color};
+    }
+
+    & > * {
+        margin : 5px;
+    }
+`
+export const MenuLink = styled(Link) 
+`
+list-style : none;
+text-decoration : none;
+display : flex;
+align-items:center;
+justify-content:flex-start;
 width : 100%;
 padding : 15px;
 margin-top : 5px;

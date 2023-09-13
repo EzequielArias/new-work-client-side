@@ -12,9 +12,7 @@ export interface ProfilePageSelector {
 // User Profile data shapes
 
 export interface UserProfile {
-    name : string
-    avatar : string
-    academic : string[]
-    workexperience : string[]
+    name : string;
+    avatar : string;
 }
 
