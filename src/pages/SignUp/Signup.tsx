@@ -6,11 +6,12 @@ import { signUp } from '../../services'
 import { useDispatch } from "react-redux";
 import { signup } from "../../redux/states";
 import { Navbar } from "../../components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserForm } from "../../interfaces";
 
 export const Signup = () => {
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const initialState : UserForm = {
@@ -21,12 +22,15 @@ export const Signup = () => {
   const { form, formChange, errs, err } = useForm<UserForm>(initialState);
   const { callEndpoint } = useFetchAndLoad()
 
+  const successFullLog = () => navigate('/feed');
+
   const handleSubmit = async () => {
     const { data } = await callEndpoint(signUp(form))
     errs(data)
     if(err.length > 0) return
     dispatch(signup(data))
     localStorage.setItem('current_user', JSON.stringify(data.payload.tokens));
+    successFullLog()
   }
 
   useEffect(() => {

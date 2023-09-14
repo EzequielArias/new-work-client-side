@@ -21,7 +21,7 @@ import {
 import { ProfileImg } from "../../styled-components";
 import { CardArrowNext } from "./styled-components";
 import { PostCardData } from "../../interfaces";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
 export const PostCard = ({
@@ -46,6 +46,8 @@ export const PostCard = ({
         }
     }
 
+   
+    
     return (
         <PostsContainer>
             <PostHeaderContainer>

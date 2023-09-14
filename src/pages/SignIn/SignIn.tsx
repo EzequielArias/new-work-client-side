@@ -14,13 +14,15 @@ import { signIn } from "../../services"
 import { useDispatch } from "react-redux"
 import { setUserData } from '../../redux/states'
 import { Navbar } from "../../components"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { UserForm } from "../../interfaces"
 import { UserInfo } from "../../adapters"
 
 export const SignIn = () => {
-
+    const navigate = useNavigate();
     const dispatch = useDispatch()
+
+    const successFullLog = () => navigate('/feed')
 
     const initialState : UserForm = {
       email : "",
@@ -40,6 +42,7 @@ export const SignIn = () => {
         
         dispatch(setUserData(UserInfo(data.payload)))
         localStorage.setItem('current_user', JSON.stringify(data.payload.tokens));
+        successFullLog()
     }
 
   return (

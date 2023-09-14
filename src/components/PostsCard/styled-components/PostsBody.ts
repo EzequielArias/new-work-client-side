@@ -6,21 +6,20 @@ export const PostsContainer = styled.div
     display : flex;
     flex-direction : column;
     background-color : ${Root.__Primary_color};
-
-    height : 550px;
     margin : 15px 30% 15px 30%;
 `
 
 export const PostBox = styled.div 
 `
     background-color : ${Root.__Secondary_color};
-    height : 90%;
+    margin : 0 5px 0 5px;
     padding : 15px;
 `
 
 export const Description = styled.p 
 `
 padding-bottom : 10px;
+color : ${Root.__Font_color};
 `
 
 export const PostImages = styled.img 

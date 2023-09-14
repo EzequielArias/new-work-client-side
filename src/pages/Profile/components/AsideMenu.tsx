@@ -6,8 +6,7 @@ import { AsideMenuContainer,
         AsideUserImg,
         MenuLink 
     } from "../styled-component"
-import { ProfilePageSelector, Token, User } from "../../../interfaces"
-import { useEffect, useState } from "react";
+import { ProfilePageSelector } from "../../../interfaces"
 
 // Icons
 import { CgProfile } from 'react-icons/cg';
@@ -17,7 +16,6 @@ import { AiFillHome } from 'react-icons/ai'
 //Redux-hooks
 import { useSelector } from "react-redux";
 import { StoreType } from "../../../redux/store";
-import { NavLink, redirect } from "react-router-dom";
 
 export const AsideMenu = ({ setPage } : {setPage : React.Dispatch<React.SetStateAction<ProfilePageSelector>>}) => {
       
@@ -40,7 +38,6 @@ export const AsideMenu = ({ setPage } : {setPage : React.Dispatch<React.SetState
                 <MenuItem onClick={() => pageHandler('profile')}><CgProfile/>Perfil</MenuItem>
                 <MenuItem onClick={() => pageHandler('setting')}><IoSettingsSharp/>Configuracion</MenuItem>
                 <MenuLink to={'/feed'}><AiFillHome/>Inicio</MenuLink>
-                <MenuItem onClick={() => pageHandler('loquesea')}>Logaritmo 4</MenuItem>
             </MenuItemContainer>
         </AsideMenuContainer>
     )
