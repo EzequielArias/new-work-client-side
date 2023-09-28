@@ -17,7 +17,6 @@ export const AccountSlice = createSlice({
         signin : (state, action) => state = action.payload,
 
         setUserData : (state, action : PayloadAction<User>) => {
-            console.log(action)
                 state.email = action.payload.email
                 state.image = action.payload.image
                 state.name = action.payload.name

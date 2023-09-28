@@ -1,21 +1,23 @@
 import styled from 'styled-components';
 
-export const AccountContainer = styled.section 
+export const AccountContainer = styled.div 
 `
-    background-color : #0f3942;
-    height : 100vh; 
+    background-color : black;
+    height : 100%;
+    width : 100%; 
     display : flex;
     justify-content : center;
     align-items : center;
     color : #f2f6f7;
     border : 1px solid rgba(200,200,200,0.2);
+    padding : 30px;
 `
 
 export const UIpersonCard = styled.div 
 `
 background-color : #002e39;
-width : 95%;
-height : 95%;
+width : 100%;
+height : 100%;
 border-radius : 15px;
 
 display : flex ; 

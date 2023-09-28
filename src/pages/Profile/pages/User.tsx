@@ -86,7 +86,6 @@ export const User = () => {
     const changeName = async () => {
         try {
             await callEndpoint(editUser(at, {name : form.name}))
-            console.log('CHANGE NAME')
 
         } catch (error) {
             console.log(error)
@@ -96,7 +95,6 @@ export const User = () => {
     const changeImg = async () => {
         try {
             await callEndpoint(editUser(at, formRef.current))
-            console.log('CHANGE IMAGE')
         } catch (error) {
             console.log(error)
         }
@@ -114,7 +112,7 @@ export const User = () => {
       return () => {
         
       }
-    }, [changeImg, changeName])
+    }, [])
     
   return (
         <SelectedViewContainer>
